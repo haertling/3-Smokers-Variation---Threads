@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
 
 void *gordonRamsay(void *a)
 {
-    while(generalCount <= 100)
+    while(1)
     {
         sleep(1); // sleep temporarily at every iteration
         
@@ -134,7 +134,7 @@ void *gordonRamsay(void *a)
         // Check that there are available jobs; if not, keep the chef waiting
         while(chefJobs == 0)
         {
-            printf("Waiting...\n");
+            printf("Waiting.....\n");
             pthread_cond_wait(&condChef,&chefLock);
         }
         
@@ -424,4 +424,3 @@ void *sodaGuy(void *a)
     }
     return 0;
 }
-
