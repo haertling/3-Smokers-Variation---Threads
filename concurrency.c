@@ -126,17 +126,10 @@ void *gordonRamsay(void *a)
 {
     while(1)
     {
-        sleep(1); // sleep temporarily at every iteration
+        sleep(1); // sleep temporarily at every iteration (1s)
         
         // Set the lock
         pthread_mutex_lock(&chefLock);
-        
-        // Check that there are available jobs; if not, keep the chef waiting
-        while(chefJobs == 0)
-        {
-            printf("Waiting.....\n");
-            pthread_cond_wait(&condChef,&chefLock);
-        }
         
         printf("Finsihed Waiting!!!\n");
         
@@ -152,11 +145,12 @@ void *gordonRamsay(void *a)
         }
         if(generalCount > 100)
         {
-            printf("----------------------------\n");
-            printf("-----Overall Statistics-----\n");
-            printf("-----Burgers Given: %d------\n", burgerCount);
-            printf("-----Fries Given: %d--------\n", friesCount);
-            printf("-----Sodas Given: %d--------\n", sodaCount);
+            printf("----------------------------------------\n");
+            printf("-----Overall Statistics-----------------\n");
+            printf("-----Burger guy ate: %d times-----------\n", burgerCount);
+            printf("-----Fry guy ate:    %d times-----------\n", friesCount);
+            printf("-----Soda guy ate:   %d times-----------\n", sodaCount);
+            printf("----------------------------------------\n");
             break; // exit loop
         }
         
@@ -228,7 +222,7 @@ void *giveBurger(void *a)
         // wait for customer to be ready for a burger
         if(!hasBurger)
         {
-            printf("Waiting...\n");
+            printf("Waiting for burger...\n");
             pthread_cond_wait(&burger, &chefLock);
         }
         
@@ -267,7 +261,7 @@ void *giveFries(void *a)
         // wait for customer to be ready for fries
         if(!hasFries)
         {
-            printf("Waiting...\n");
+            printf("Waiting for fries...\n");
             pthread_cond_wait(&fries, &chefLock);
         }
         
@@ -306,7 +300,7 @@ void *giveSoda(void *a)
         // wait for customer to be ready for soda
         if(!hasSoda)
         {
-            printf("Waiting...\n");
+            printf("Waiting for soda...\n");
             pthread_cond_wait(&soda, &chefLock);
         }
         
