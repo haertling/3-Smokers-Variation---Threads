@@ -56,8 +56,70 @@ pthread_cond_t condCustomerSoda = PTHREAD_COND_INITIALIZER;
 // Main is simple: all the work goes down in the give/take functions
 int main(int argc, char *argv[])
 {
+    // thread creation
+    pthread_t chefThread;
+    pthread_t giveBurgerThread;
+    pthread_t giveFriesThread;
+    pthread_t giveSodaThread;
+    pthread_t burgerGuyThread;
+    pthread_t fryGuyThread;
+    pthread_t sodaGuyThread;
     
-    return 0;
+    // get random time variable
+    time_t curTime;
+    srand((unsigned)time(&curTime));
+    
+    // Check that each thread creation worked
+    // Thread creation returns 0, if nothing returned 0, thread was not created
+    if(pthread_create(&chefThread, NULL, gordonRamsay, NULL) != 0)
+    {
+        printf("Unable to create chef thread, exiting\n");
+        exit(1);
+    }
+    
+    if(pthread_create(&giveBurgerThread, NULL, giveBurger, NULL) != 0)
+    {
+        printf("Unable to create giveBurger thread, exiting\n");
+        exit(1);
+    }
+    
+    if(pthread_create(&giveFriesThread, NULL, giveFries, NULL) != 0)
+    {
+        printf("Unable to create giveFries thread, exiting\n");
+        exit(1);
+    }
+    
+    if(pthread_create(&giveSodaThread, NULL, giveSoda, NULL) != 0)
+    {
+        printf("Unable to create giveFries thread, exiting\n");
+        exit(1);
+    }
+    
+    if(pthread_create(&burgerGuyThread, NULL, burgerGuy, NULL) != 0)
+    {
+        printf("Unable to create burgerGuy thread, exiting\n");
+        exit(1);
+    }
+    
+    if(pthread_create(&fryGuyThread, NULL, fryGuy, NULL) != 0)
+    {
+        printf("Unable to create fryGuy thread, exiting\n");
+        exit(1);
+    }
+    
+    if(pthread_create(&sodaGuyThread, NULL, sodaGuy, NULL) != 0)
+    {
+        printf("Unable to create sodaGuy thread, exiting\n");
+        exit(1);
+    }
+    
+    pthread_join(chefThread, NULL);
+    pthread_join(giveBurgerThread, NULL);
+    pthread_join(giveFriesThread, NULL);
+    pthread_join(giveSodaThread, NULL);
+    pthread_join(burgerGuyThread, NULL);
+    pthread_join(fryGuyThread, NULL);
+    pthread_join(sodaGuyThread, NULL);
 }
 
 void *gordonRamsay(void *a)
