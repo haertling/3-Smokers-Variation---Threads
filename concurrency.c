@@ -1,9 +1,9 @@
 //  Steven Haertling, Danny Nomura, Konstantin Sanosyan
 //  concurrency.c
-//
-//
-//
-//
+//  This program demonstrates a similar solution to that of "the 3 smokers" problem, using concurrency primitives.
+//  Here we have 4 particular threads, one for the chef, a customer who has infinite burgers,
+//  a customer with infinite fries, and a customer with infinite soda. They each desire the other items.
+//  The chef will produce 2 items randomly, out of burgers, fries, and soda.
 
 #include <stdio.h>
 #include <pthread.h>
@@ -47,7 +47,7 @@ pthread_cond_t burger = PTHREAD_COND_INITIALIZER;
 pthread_cond_t fries = PTHREAD_COND_INITIALIZER;
 pthread_cond_t soda = PTHREAD_COND_INITIALIZER;
 
-// Initialize conditionals for chef and assigned items
+// Initialize conditionals for chef and assigned items - Our designated threads
 pthread_cond_t condChef = PTHREAD_COND_INITIALIZER;
 pthread_cond_t condCustmerBurger = PTHREAD_COND_INITIALIZER;
 pthread_cond_t condCustumerFries = PTHREAD_COND_INITIALIZER;
