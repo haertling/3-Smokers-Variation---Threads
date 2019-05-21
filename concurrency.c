@@ -65,11 +65,7 @@ int main(int argc, char *argv[])
     pthread_t fryGuyThread;
     pthread_t sodaGuyThread;
     
-    // get random time variable
-    time_t curTime;
-    srand((unsigned)time(&curTime));
-    
-    // Check that each thread creation worked
+    // Check that each thread creation worked with proper notation
     // Thread creation returns 0, if nothing returned 0, thread was not created
     if(pthread_create(&chefThread, NULL, gordonRamsay, NULL) != 0)
     {
@@ -127,11 +123,10 @@ void *gordonRamsay(void *a)
     while(1)
     {
         sleep(1); // sleep temporarily at every iteration (1s)
+        // If you want to skip the wait, you can comment out the previous line; results are the same
         
         // Set the lock
         pthread_mutex_lock(&chefLock);
-        
-        printf("Finsihed Waiting!!!\n");
         
         // Update counter
         generalCount += 1;
@@ -141,7 +136,7 @@ void *gordonRamsay(void *a)
         // If we have reached max number of runs (100) output total stats
         if(generalCount <= 100)
         {
-            printf("Number of runs: %d\n", generalCount);
+            printf("-----Run Number: %d-----\n", generalCount);
         }
         if(generalCount > 100)
         {
@@ -171,7 +166,7 @@ void *gordonRamsay(void *a)
             pthread_cond_signal(&burger);
             pthread_cond_signal(&fries);
             // Some output to keep track
-            printf("Chef Ramsay Cooks Burger and Fries\n");
+            printf("Chef Ramsay Decides to Cook Burger and Fries\n");
         }
         
         // Soda and Fries chosen to be cooked
@@ -187,7 +182,7 @@ void *gordonRamsay(void *a)
             pthread_cond_signal(&soda);
             pthread_cond_signal(&fries);
             // Some output to keep track
-            printf("Chef Ramsay Cooks Soda and Fries\n");
+            printf("Chef Ramsay Decides to Cook Soda and Fries\n");
         }
         
         // Burger and Soda Chosen to be cooked
@@ -203,7 +198,7 @@ void *gordonRamsay(void *a)
             pthread_cond_signal(&burger);
             pthread_cond_signal(&soda);
             // Some output to keep track
-            printf("Chef Ramsay Cooks Burger and Soda\n");
+            printf("Chef Ramsay Decides to Cook Burger and Soda\n");
         }
         
         // End the loop, Unlock
@@ -339,7 +334,6 @@ void *burgerGuy(void *a)
         // wait for customer to be ready for food
         while(burgerJobs == 0)
         {
-            printf("Waiting...\n");
             pthread_cond_wait(&condCustmerBurger, &customerLock);
         }
         
@@ -369,7 +363,6 @@ void *fryGuy(void *a)
         // wait for customer to be ready for food
         while(friesJobs == 0)
         {
-            printf("Waiting...\n");
             pthread_cond_wait(&condCustumerFries, &customerLock);
         }
         
@@ -399,7 +392,6 @@ void *sodaGuy(void *a)
         // wait for customer to be ready for food
         while(sodaJobs == 0)
         {
-            printf("Waiting...\n");
             pthread_cond_wait(&condCustomerSoda, &customerLock);
         }
         
